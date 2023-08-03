@@ -13,11 +13,17 @@ function Attendance() {
         axios.get('http://127.0.0.1:8000/api/employee/attendance')
             .then(response => {
 
-
-                console.log('response.data', response.data)
-                setAttendance(response.data.attendance_data);
-                setTotalWorkHours(response.data.total_working_hours);
-                setIsDataLoad(true)
+                if(response.data.status == 200)
+                {
+                    setAttendance(response.data.response.detail.attendance_data);
+                    setTotalWorkHours(response.data.response.detail.total_working_hours);
+                    setIsDataLoad(true)
+                }
+                else
+                {
+                    setIsDataLoad(false)
+                }
+                
 
             })
             .catch(error => { console.error(`Error: ${error}`); setIsDataLoad(false) });
@@ -50,7 +56,7 @@ function Attendance() {
                                     <td>{record.Name}</td>
                                     <td>{record.checkin || "N/A"}</td>
                                     <td>{record.checkout || "N/A"}</td>
-                                    <td>{record.total_working_hours}</td>
+                                    <td>{record.total_working_hours} Hour</td>
                                 </tr>
                             ))}
                         </tbody>

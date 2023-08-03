@@ -28,7 +28,17 @@ function AttendanceUploader () {
                     }
                 })
                 .then(response => {
-                    setMessage(response.data.message);
+                   
+                    if(response.data.status == 200)
+                    {
+                        setMessage(response.data.response.message);
+                    }
+                    else
+                    {
+                        setMessage(response.data.response.message);
+                    }
+
+                 
                 })
                 .catch(error => {
                     if (error.response && error.response.data) {
